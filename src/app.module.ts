@@ -1,19 +1,20 @@
 import { GraphQLModule } from '@nestjs/graphql';
 import { Module, Logger } from '@nestjs/common';
-import { AppController } from './controllers/app.controller';
-import { AppService } from './services/app.service';
-import { AuthModule } from './resolvers/auth/auth.module';
-import { UserModule } from './resolvers/user/user.module';
-import { PostModule } from './resolvers/post/post.module';
-import { AppResolver } from './resolvers/app.resolver';
-import { DateScalar } from './common/scalars/date.scalar';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import config from './configs/config';
-import { GraphqlConfig } from './configs/config.interface';
 import { PrismaModule } from 'nestjs-prisma';
-import { loggingMiddleware } from './logging.middleware';
 import { BullModule } from '@nestjs/bull';
 import { QueueOptions } from 'bull';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AppResolver } from './app.resolver';
+import { AuthModule } from 'src/auth/auth.module';
+import { UsersModule } from 'src/users/users.module';
+import { PostsModule } from 'src/posts/posts.module';
+import { DateScalar } from 'src/common/scalars/date.scalar';
+import config from 'src/common/configs/config';
+import type { GraphqlConfig } from 'src/common/configs/config.interface';
+import { loggingMiddleware } from 'src/common/middleware/logging.middleware';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
@@ -52,8 +53,8 @@ import { QueueOptions } from 'bull';
       inject: [ConfigService],
     }),
     AuthModule,
-    UserModule,
-    PostModule,
+    UsersModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver, DateScalar],
