@@ -1,5 +1,6 @@
 import { Process, Processor } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
+
 @Processor('nest-worker')
 export class NestConsumer {
   logger = new Logger('NestConsumer');
