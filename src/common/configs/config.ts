@@ -44,6 +44,10 @@ const config: Config = {
       },
     },
   },
+  validation: {
+    enableDebugMessages: true,
+    forbidUnknownValues: false,
+  },
 };
 
 export default (): Config => config;
